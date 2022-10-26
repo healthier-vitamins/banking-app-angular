@@ -1,0 +1,114 @@
+<div class="d-flex justify-content-around">
+  <div class="d-flex flex-column w-25 shadow" style="border-radius: 16px">
+    <h5
+      class="bg bg-dark text-white text-center py-2"
+      style="border-top-left-radius: 16px; border-top-right-radius: 16px"
+    >
+      {{ creditCardOffer?.offerName }}
+    </h5>
+    <div class="d-flex ms-2">
+      <h6>Annual Fee:</h6>
+      <p class="mb-0 ms-2">${{ creditCardOffer?.annualFee }}</p>
+    </div>
+    <div class="d-flex ms-2">
+      <h6>Interest Rate:</h6>
+      <p class="mb-0 ms-2">{{ creditCardOffer?.interestRatePercent }}%</p>
+    </div>
+    <div class="d-flex ms-2">
+      <h6>Interest Free Withdrawal:</h6>
+      <p class="mb-0 ms-2">
+        ${{ creditCardOffer?.interestFreeCashWithdrawal }}
+      </p>
+    </div>
+    <div class="align-self-center mb-2">
+      <button class="rounded-pill" (click)="applyCreditCard(creditCardOffer)">
+        Apply
+      </button>
+    </div>
+  </div>
+  <div class="d-flex flex-column w-25 shadow" style="border-radius: 16px">
+    <h5
+      class="bg bg-dark text-white text-center py-2"
+      style="border-top-left-radius: 16px; border-top-right-radius: 16px"
+    >
+      {{ homeLoanOffer?.offerName }}
+    </h5>
+    <div class="d-flex ms-2">
+      <h6>Loan Amount:</h6>
+      <p class="mb-0 ms-2">${{ homeLoanOffer?.loanAmnt }}</p>
+    </div>
+    <div class="d-flex ms-2">
+      <h6>Interest Rate:</h6>
+      <p class="mb-0 ms-2">{{ homeLoanOffer?.interestRatePercent }}%</p>
+    </div>
+    <div class="d-flex ms-2">
+      <h6>Pre-closure Charges:</h6>
+      <p class="mb-0 ms-2">${{ homeLoanOffer?.preclosureCharges }}</p>
+    </div>
+    <div class="align-self-center mb-2">
+      <button class="rounded-pill" (click)="applyHomeLoan(homeLoanOffer)">
+        Apply
+      </button>
+    </div>
+  </div>
+  <div class="d-flex flex-column w-25 shadow" style="border-radius: 16px">
+    <h5
+      class="bg bg-dark text-white text-center py-2"
+      style="border-top-left-radius: 16px; border-top-right-radius: 16px"
+    >
+      {{ carLoanOffer?.offerName }}
+    </h5>
+    <div class="d-flex ms-2">
+      <h6>Loan Amount:</h6>
+      <p class="mb-0 ms-2">${{ carLoanOffer?.loanAmnt }}</p>
+    </div>
+    <div class="d-flex ms-2">
+      <h6>Interest Rate:</h6>
+      <p class="mb-0 ms-2">{{ carLoanOffer?.interestRatePercent }}%</p>
+    </div>
+    <div class="d-flex ms-2">
+      <h6>Pre-closure Charges:</h6>
+      <p class="mb-0 ms-2">${{ carLoanOffer?.preclosureCharges }}</p>
+    </div>
+    <div class="align-self-center mb-2">
+      <button class="rounded-pill" (click)="applyCarLoan(carLoanOffer)">
+        Apply
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="listOfOffersByCustId?.length !== 0" class="d-flex justify-content-center mt-5 mb-4">
+  <div class="d-flex flex-column shadow" style="border-radius: 16px;">
+    <h5 class="bg bg-dark text-white text-center py-2" style="border-top-left-radius: 16px; border-top-right-radius: 16px">{{user?.customer?.custFirstName}} {{user?.customer?.custLastName}}'s Offers</h5>
+    <div class="px-5 py-3 table-responsive">
+      <table
+        class="table table-bordered table-striped table-hover align-middle"
+      >
+        <thead>
+          <tr>
+            <th>Offer Name</th>
+            <th>Annual Fee</th>
+            <th>Loan Amount</th>
+            <th>Interest Rate</th>
+            <th>Interest Free Withdrawal</th>
+            <th>Pre-closure Charges</th>
+            <th *ngIf="listOfOffersByCustId?.length !== 0" ></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let offer of listOfOffersByCustId">
+            <td>{{ offer.offerName }}</td>
+            <td>{{ offer.annualFee }}</td>
+            <td>{{ offer.loanAmnt }}</td>
+            <td>{{ offer.interestRatePercent }}%</td>
+            <td>{{ offer.interestFreeCashWithdrawal }}</td>
+            <td>{{ offer.preclosureCharges }}</td>
+            <td><button class="rounded-pill" (click)="handleDelete(offer.offerId)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <button *ngFor="let names"></button> -->
+    <!-- <button (click)="testButton()">click</button> -->
+  </div>
+</div>

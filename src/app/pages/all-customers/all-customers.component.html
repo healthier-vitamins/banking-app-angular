@@ -1,0 +1,260 @@
+<div class="d-flex flex-column">
+  <h6 class="ms-4">
+    <i>Usernames are "firstName" + "-user" (would join firstName + lastName)</i>
+  </h6>
+  <h6 class="ms-4"><i>Passwords are "Aa@123"</i></h6>
+  <!-- <table> -->
+    <div class="p-4 table-responsive">
+      <table
+        class="table table-bordered table-striped table-hover align-middle"
+      >
+        <thead>
+          <tr class="align-middle text-center">
+            <!-- <th>Index</th> -->
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>City</th>
+            <th>Phone Number</th>
+            <th>Account Type</th>
+            <th>Account Balance</th>
+            <th>Account Created</th>
+            <th></th>
+            <!-- <th> -->
+
+            <!-- <div class="d-flex flex-row flex-wrap justify-content-center align-items-start"> -->
+            <!-- <button class="btn btn-info m-1" style="border-radius: 20px" (click)="handleSeedData()">Seed</button>
+                      <button class="btn btn-dark m-1" style="border-radius: 20px" (click)="handleDeleteAll()">Delete All</button> -->
+            <!-- </div> -->
+            <!-- </th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- *ngIf="!!user.customer" -->
+          <tr *ngFor="let user of listOfUser" class="text-center">
+            <!-- <td *ngIf="user.customer">{{ i }}</td> -->
+            <td *ngIf="user.customer">{{ user.customer.custFirstName }}</td>
+            <td *ngIf="user.customer">{{ user.customer.custLastName }}</td>
+            <td *ngIf="user.customer">{{ user.customer.custCity }}</td>
+            <td *ngIf="user.customer">{{ user.customer.custPhone }}</td>
+            <td *ngIf="user.customer">{{ user.customer.bankAcc?.accType }}</td>
+            <td *ngIf="user.customer">{{ user.customer.bankAcc?.accBal }}</td>
+            <td *ngIf="user.customer">
+              {{ user.customer.bankAcc?.accCreationDate }}
+            </td>
+            <td *ngIf="user.customer">
+
+
+                <button
+                *ngIf="user.customer && !showConfirmDel"
+                class="me-2 rounded-pill"
+                (click)="handleEdit(user.id ? user.id : 0)"
+                >
+                {{ isUpdating ? "Cancel" : "Edit" }}
+              </button>
+              
+              <button
+                *ngIf="user.customer && !showConfirmDel "
+                class="rounded-pill"
+                (click)="handleValidator(user)"
+                >
+                <!-- (click)="showConfirmDel = !showConfirmDel" -->
+                {{ showConfirmDel ? "Cancel" : "Delete" }}
+              </button>
+
+              <button
+                *ngIf="user.customer && showConfirmDel"
+                (click)="handleDel(user.id ? user.id : 0)"
+                class="me-2 rounded-pill"
+              >
+                Confirm
+              </button>
+              <button
+                *ngIf="user.customer && showConfirmDel"
+                (click)="showConfirmDel = !showConfirmDel"
+                class="rounded-pill"
+              >
+                Cancel
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <!-- </table> -->
+</div>
+
+<!-- <div
+  *ngIf="showConfirmDel"
+  class="d-flex flex-column border p-2 w-25 align-items-center shadow"
+>
+  <h4>Confirm delete?</h4>
+  <div class="d-flex flex-row"></div>
+</div> -->
+
+<div *ngIf="isUpdating" class="d-flex justify-content-center">
+  <div
+    class="d-flex flex-column shadow"
+    style="border-bottom-left-radius: 16px; border-bottom-right-radius: 16px"
+  >
+    <h5
+      class="bg bg-dark text-white text-center mb-0 py-2"
+      style="border-top-left-radius: 16px; border-top-right-radius: 16px"
+    >
+      Customer Details
+    </h5>
+    <div
+      class="d-flex border px-5 py-2 justify-content-center"
+      style="border-bottom-left-radius: 16px; border-bottom-right-radius: 16px"
+    >
+      <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+        <div class="">
+
+          <!-- <div *ngIf="accBal.hasError('lessThanTenThousand')" class="alert alert-danger p-1">
+            <p class="m-0">Account cannot have less than $10000</p>
+          </div> -->
+
+          <label class="form-label" for="custFirstName">First Name</label>
+          <input
+            formControlName="custFirstName"
+            type="text"
+            name="custFirstName"
+            class="form-control"
+          />
+        </div>
+        <div class="d-flex m-2">
+          <div
+            *ngIf="custFirstName.errors?.['required']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">First name cannot be left blank</p>
+          </div>
+          <div
+            *ngIf="custFirstName.errors?.['noNumValidator']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">First name cannot contain numbers</p>
+          </div>
+        </div>
+
+        <div class="">
+          <label class="form-label" for="custLastName">Last Name</label>
+          <input
+            formControlName="custLastName"
+            type="text"
+            name="custLastName"
+            class="form-control"
+          />
+        </div>
+        <div class="d-flex m-2">
+          <div
+            *ngIf="custLastName.errors?.['required']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Last name cannot be left blank</p>
+          </div>
+          <div
+            *ngIf="custLastName.errors?.['noNumValidator']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Last name cannot contain numbers</p>
+          </div>
+        </div>
+
+        <div class="">
+          <label class="form-label" for="custCity">City</label>
+          <input
+            formControlName="custCity"
+            type="text"
+            name="custCity"
+            class="form-control"
+          />
+        </div>
+        <div class="d-flex m-2">
+          <div
+            *ngIf="custCity.errors?.['required']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">City cannot be left blank</p>
+          </div>
+          <div
+            *ngIf="custCity.hasError('noNumValidator')"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">City cannot contain numbers</p>
+          </div>
+        </div>
+
+        <div class="">
+          <label class="form-label" for="custPhone">Phone Number</label>
+          <div class="input-group">
+            <span class="input-group-text" id="inputGroupPrepend">+65</span>
+            <input
+              formControlName="custPhone"
+              type="text"
+              name="custPhone"
+              class="form-control"
+              aria-describedby="inputGroupPrepend"
+            />
+          </div>
+        </div>
+        <div class="d-flex m-2">
+          <div
+            *ngIf="custPhone.errors?.['required']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Phone number cannot be left blank</p>
+          </div>
+          <div
+            *ngIf="custPhone.errors?.['onlyNumValidator']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Phone number can contain only numbers</p>
+          </div>
+          <div
+            *ngIf="custPhone.errors?.['maxlength']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Phone number can only contain 8 numbers</p>
+          </div>
+        </div>
+
+        <div formGroupName="bankAccForm" class="d-flex flex-column">
+          <hr />
+          <!-- <h5 class="text-center">Bank Account Details</h5> -->
+          <label class="form-label" for="accType">Account Type</label>
+          <!-- <input
+            formControlName="accType"
+            type="text"
+            name="accType"
+            class="form-control"
+          /> -->
+          <select name="bankAccType" (change)="update($event)">
+            <option disabled value="default">---Select option---</option>
+            <option *ngFor="let accType of bankAccTypes" [value]="accType">
+              {{ accType }}
+            </option>
+          </select>
+
+          <label class="form-label" for="accBal">Account Balance</label>
+          <input
+            formControlName="accBal"
+            type="text"
+            name="accBal"
+            class="form-control mb-2"
+          />
+          <div
+            *ngIf="accBal.errors?.['onlyNumValidator']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Account balance can contain only numbers</p>
+          </div>
+        </div>
+
+        <button class="rounded-pill" [disabled]="customerForm.invalid">
+          Submit
+        </button>
+        <button (click)="handleCancel()" class="rounded-pill">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

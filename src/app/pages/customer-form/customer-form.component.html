@@ -1,0 +1,161 @@
+<div class="d-flex justify-content-center">
+  <div
+    class="d-flex flex-column align-items-center shadow"
+    style="border-bottom-left-radius: 16px; border-bottom-right-radius: 16px"
+  >
+    <h5
+      class="bg bg-dark text-white text-center w-100 mb-0 py-2"
+      style="border-top-left-radius: 16px; border-top-right-radius: 16px"
+    >
+      Customer Details
+    </h5>
+    <div
+      class="d-flex border px-5 py-2 justify-content-center"
+      style="border-bottom-left-radius: 16px; border-bottom-right-radius: 16px"
+    >
+      <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+        <div class="">
+          <label class="form-label" for="custFirstName">First Name</label>
+          <input
+            formControlName="custFirstName"
+            type="text"
+            name="custFirstName"
+            class="form-control"
+          />
+        </div>
+        <div class="d-flex m-1">
+          <div
+            *ngIf="custFirstName.errors?.['required']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">First name cannot be left blank</p>
+          </div>
+          <div
+            *ngIf="custFirstName.errors?.['noNumValidator']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">First name cannot contain numbers</p>
+          </div>
+        </div>
+
+        <div class="">
+          <label class="form-label" for="custLastName">Last Name</label>
+          <input
+            formControlName="custLastName"
+            type="text"
+            name="custLastName"
+            class="form-control"
+          />
+        </div>
+        <div class="d-flex m-1">
+          <div
+            *ngIf="custLastName.errors?.['required']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Last name cannot be left blank</p>
+          </div>
+          <div
+            *ngIf="custLastName.errors?.['noNumValidator']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Last name cannot contain numbers</p>
+          </div>
+        </div>
+
+        <div class="">
+          <label class="form-label" for="custCity">City</label>
+          <input
+            formControlName="custCity"
+            type="text"
+            name="custCity"
+            class="form-control"
+          />
+        </div>
+        <div class="d-flex m-1">
+          <div
+            *ngIf="custCity.errors?.['required']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">City cannot be left blank</p>
+          </div>
+          <div
+            *ngIf="custCity.hasError('noNumValidator')"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">City cannot contain numbers</p>
+          </div>
+        </div>
+
+        <div class="">
+          <label class="form-label" for="custPhone">Phone Number</label>
+          <div class="input-group">
+            <span class="input-group-text" id="inputGroupPrepend">+65</span>
+            <input
+              formControlName="custPhone"
+              type="text"
+              name="custPhone"
+              class="form-control"
+              aria-describedby="inputGroupPrepend"
+            />
+          </div>
+        </div>
+        <div class="d-flex m-1">
+          <div
+            *ngIf="custPhone.errors?.['required']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Phone number cannot be left blank</p>
+          </div>
+          <div
+            *ngIf="custPhone.errors?.['onlyNumValidator']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Phone number can contain only numbers</p>
+          </div>
+          <div
+            *ngIf="custPhone.errors?.['maxlength']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Phone number can only contain 8 numbers</p>
+          </div>
+        </div>
+
+        <div formGroupName="bankAccForm" class="d-flex flex-column">
+          <hr class="m-0"/>
+          <!-- <h5 class="text-center">Bank Account Details</h5> -->
+
+          <label class="form-label mt-1" for="accType">Account Type</label>
+          <!-- <input
+            formControlName="accType"
+            type="text"
+            name="accType"
+            class="form-control"
+          /> -->
+          <select name="bankAccType" (change)="update($event)">
+            <option disabled value="default">---Select option---</option>
+            <option *ngFor="let accType of bankAccTypes" [value]="accType">
+              {{ accType }}
+            </option>
+          </select>
+
+          <label class="form-label" for="accBal">Account Balance</label>
+          <input
+            formControlName="accBal"
+            type="text"
+            name="accBal"
+            class="form-control mb-2"
+          />
+          <div
+            *ngIf="accBal.errors?.['onlyNumValidator']"
+            class="alert alert-danger p-1"
+          >
+            <p class="m-0">Account balance can contain only numbers</p>
+          </div>
+          
+        </div>
+
+        <button class="rounded-pill" [disabled]="customerForm.invalid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
