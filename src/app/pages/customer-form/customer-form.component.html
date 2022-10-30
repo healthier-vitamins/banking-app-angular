@@ -121,7 +121,7 @@
         </div>
 
         <div formGroupName="bankAccForm" class="d-flex flex-column">
-          <hr class="m-0"/>
+          <hr class="m-0" />
           <!-- <h5 class="text-center">Bank Account Details</h5> -->
 
           <label class="form-label mt-1" for="accType">Account Type</label>
@@ -131,9 +131,13 @@
             name="accType"
             class="form-control"
           /> -->
-          <select name="bankAccType" (change)="update($event)">
+          <select
+            name="bankAccType"
+            (change)="update($event)"
+            formControlName="accType"
+          >
             <option disabled value="default">---Select option---</option>
-            <option *ngFor="let accType of bankAccTypes" [value]="accType">
+            <option *ngFor="let accType of bankAccTypes" [ngValue]="accType">
               {{ accType }}
             </option>
           </select>
@@ -151,10 +155,11 @@
           >
             <p class="m-0">Account balance can contain only numbers</p>
           </div>
-          
         </div>
 
-        <button class="rounded-pill" [disabled]="customerForm.invalid">Submit</button>
+        <button class="rounded-pill" [disabled]="customerForm.invalid">
+          Submit
+        </button>
       </form>
     </div>
   </div>

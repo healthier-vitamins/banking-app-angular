@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { changePasswordModel } from '../models/changePassword.model';
+import { Customer } from '../models/customer';
 import { Offer } from '../models/offer';
 import { User } from '../models/user';
 
@@ -19,8 +20,8 @@ export class ApiService {
     return this.http.post(`http://localhost:8080/login`, JSON.stringify(loginForm.getRawValue()), {headers: reqHeader})
   }
 
-  saveCustomer(user: User) {
-    return this.http.post(this.API_PATH + "/user/save", JSON.stringify(user), {headers: {"Content-Type": 'application/json'}})
+  saveCustomer(cust: Customer | null | undefined) {
+    return this.http.post(this.API_PATH + "/user/save", JSON.stringify(cust), {headers: {"Content-Type": 'application/json'}})
   }
 
   allUsers() {
