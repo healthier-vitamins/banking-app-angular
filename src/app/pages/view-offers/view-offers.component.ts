@@ -41,17 +41,7 @@ export class ViewOffersComponent implements OnInit {
     this.user = (await lastValueFrom(
       this.apiService.getUserByUsername(localStorage.getItem('username'))
     )) as User;
-    console.log(this.user);
-    // console.log(this.authService.test)
-
-    // this.authService.loggedInUsername$.pipe(tap(username => {
-    //   if(!!username) {
-    //    this.apiService.getUserByUsername(username).subscribe(user => {
-    //     console.log("user inisde inner subscribe " +  user)
-    //     this.user = user
-    //    })
-    //   }
-    // }))
+    // console.log(this.user);
   }
 
   async getCreditCardOffer(user: User | null | undefined) {
@@ -60,7 +50,7 @@ export class ViewOffersComponent implements OnInit {
     )) as Offer;
     // this.creditCardOffers!.push(creditCardOffer)
     this.creditCardOffer.custId = user?.customer?.custId;
-    console.log(this.creditCardOffer);
+    // console.log(this.creditCardOffer);
   }
 
   async getHomeLoanOffer(user: User | null | undefined) {
@@ -68,7 +58,7 @@ export class ViewOffersComponent implements OnInit {
       this.apiService.getHomeLoanOffer(user)
     )) as Offer;
     // this.homeLoanOffers!.push(homeLoanOffer)
-    console.log(this.homeLoanOffer);
+    // console.log(this.homeLoanOffer);
   }
 
   async getCarLoanOffer(user: User | null | undefined) {
@@ -76,18 +66,13 @@ export class ViewOffersComponent implements OnInit {
       this.apiService.getCarLoanOffer(user)
     )) as Offer;
     // this.carLoanOffers!.push(carLoanOffer)
-    console.log(this.carLoanOffer);
+    // console.log(this.carLoanOffer);
   }
 
-  // testButton() {
-  //   // this.getCreditCardOffer(this.user)
-  //   // this.getHomeLoanOffer(this.user)
-  //   this.getCarLoanOffer(this.user);
-  // }
 
   async applyCreditCard(creditCardOffer: Offer | null | undefined) {
     creditCardOffer!.custId = this.user!.customer!.custId
-    console.log(creditCardOffer)
+    // console.log(creditCardOffer)
     creditCardOffer = await lastValueFrom(this.apiService.saveOffer(creditCardOffer)) as Offer
     this.getOffersByCustId(this.user?.customer?.custId)
   }
@@ -106,7 +91,7 @@ export class ViewOffersComponent implements OnInit {
 
   async getOffersByCustId(custId: number | null | undefined) {
     this.listOfOffersByCustId = await lastValueFrom(this.apiService.getOffersByCustId(custId)) as Offer[]
-    console.log(this.listOfOffersByCustId)
+    // console.log(this.listOfOffersByCustId)
   }
 
   async handleDelete(offerId: number |null |undefined) {
